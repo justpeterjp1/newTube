@@ -7,6 +7,7 @@ const inter = Inter({
 });
 
 import './globals.css'
+import { TRPCProvider } from "@/trpc/client";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +24,9 @@ export default function RootLayout({
       <html lang="en">
         <body
           className={`${inter.className} antialiased`}
-        >
-          {children}
+        > <TRPCProvider>
+            {children}
+          </TRPCProvider>
         </body>
       </html>
     </ClerkProvider>
