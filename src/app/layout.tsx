@@ -8,6 +8,7 @@ const inter = Inter({
 
 import './globals.css'
 import { TRPCProvider } from "@/trpc/client";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,7 @@ export default function RootLayout({
         <body
           className={`${inter.className} antialiased`}
         > <TRPCProvider>
+          <Toaster />
             {children}
           </TRPCProvider>
         </body>
