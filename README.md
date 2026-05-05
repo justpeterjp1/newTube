@@ -40,5 +40,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 <!--  -->
-1. chnage onSelect to onSelectAction
-2. .env .local 
+1. change onSelect to onSelectAction
+2. .env .local minus (Qstash)
+3. delete 
+a. workfow folders
+b. inside form-section generateThumbnail function and in procedure 

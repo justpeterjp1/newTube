@@ -22,7 +22,7 @@ export const VideoThumbnailSkeleton = () => {
 
 export const VideoThumbnail = ({
   title,
-  imageUrl, 
+  imageUrl,
   previewUrl,
   duration,
 }: VideoThumbnailProps) => {
