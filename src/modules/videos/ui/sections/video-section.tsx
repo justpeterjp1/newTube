@@ -29,7 +29,7 @@ export const VideoSectionSkeleton = () => {
   return (
     <>
       <VideoPlayerSkeleton />
-      {/* <VideoTopRowSkeleton /> */}
+      <VideoTopRowSkeleton />
     </>
   )
 }

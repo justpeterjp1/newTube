@@ -142,7 +142,7 @@ const VideosSectionSkeleton = () => {
                     <TableCell className="text-sm truncate">
                     {format(new Date(video.createdAt), "d MMM yyyy")}
                   </TableCell> 
-                  { /* <TableCell className="text-right text-sm">
+                   <TableCell className="text-right text-sm">
                     {video.viewCount}
                   </TableCell>
                   <TableCell className="text-right text-sm">
@@ -150,7 +150,7 @@ const VideosSectionSkeleton = () => {
                   </TableCell>
                   <TableCell className="text-right text-sm pr-6">
                     {video.likeCount}
-                  </TableCell> */}
+                  </TableCell> 
                 </TableRow>
               </Link>
             ))}
