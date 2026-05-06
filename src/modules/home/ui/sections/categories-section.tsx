@@ -23,7 +23,7 @@ export const CategoriesSection = ({ categoryId }: CategoriesSectionProps) => {
 }
 
 export const CategoriesSectionSkeleton = () => {
-  return <FilterCarousel isLoading data={[]} onSelect={onSelect} />
+  return <FilterCarousel isLoading data={[]} onSelect={() => {}} />
 };
 
 const CategoriesSectionSuspense = ({ categoryId }: CategoriesSectionProps) => {

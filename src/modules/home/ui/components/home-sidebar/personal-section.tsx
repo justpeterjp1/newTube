@@ -1,5 +1,5 @@
 'use client'
-
+import { usePathname } from "next/navigation"
 import {  HistoryIcon, ListVideoIcon, ThumbsUpIcon } from "lucide-react"
 import { useClerk, useAuth } from "@clerk/nextjs";
 
@@ -36,9 +36,10 @@ const items = [
 export const PersonalSection = () => {
      const clerk = useClerk();
     const { isSignedIn } = useAuth();
+    const  pathname  = usePathname();
 
     function handleShowPersonalSection(e: React.MouseEvent<HTMLButtonElement>, item: typeof items[number]) {
-        if (!item.auth) return; // no restriction → allow
+        if (!item.auth) return; 
 
   if (!isSignedIn) {
     e.preventDefault();
@@ -54,7 +55,7 @@ export const PersonalSection = () => {
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton
                                    tooltip={item.title} 
-                                    isActive={false} // chnage to true and view contnet
+                                    isActive={pathname === item.url} // chnage to true and view contnet
                                     onClick={(e) => handleShowPersonalSection(e, item)} // do something on clcik
                                     asChild>
                                         <Link href={item.url} className="flex items-center gap-4">

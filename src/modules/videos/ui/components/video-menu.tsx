@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { PlaylistAddModal } from "@/modules/playlists/ui/components/playlist-add-modal";
+import { PlaylistAddModal } from "@/modules/playlists/ui/components/playlist-add-modal";
 
 interface VideoMenuProps {
   videoId: string;
@@ -33,11 +33,11 @@ export const VideoMenu = ({
 
   return (
     <>
-      {/* <PlaylistAddModal
+      <PlaylistAddModal
         videoId={videoId}
         open={isOpenPlaylistAddModal}
         onOpenChange={setIsOpenPlaylistAddModal}
-      /> */}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant={variant} size="icon" className="rounded-full">

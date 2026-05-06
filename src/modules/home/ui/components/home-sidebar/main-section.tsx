@@ -1,7 +1,7 @@
 'use client'
 
 import { FlameIcon, HomeIcon, PlaySquareIcon } from "lucide-react"
-  
+  import { usePathname } from "next/navigation"
 import { useClerk, useAuth } from "@clerk/nextjs";
 import { SidebarGroup, 
          SidebarGroupContent, 
@@ -17,7 +17,7 @@ const items = [
     }, 
     {
         title: "Subscriptions",
-        url: "/feed/subscriptions",
+        url: "/feed/subscribed",
         icon: PlaySquareIcon,
         auth: true
     },
@@ -32,7 +32,7 @@ const items = [
 export const MainSection = () => {
     const clerk = useClerk();
     const { isSignedIn } = useAuth();
-
+    const pathname = usePathname();
     function handleShowPersonalSection(e: React.MouseEvent<HTMLButtonElement>, item: typeof items[number]) {
         if (!item.auth) return; // no restriction → allow
 
@@ -49,7 +49,7 @@ export const MainSection = () => {
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton
                                    tooltip={item.title} 
-                                    isActive={false} // chnage to true and view contnet
+                                    isActive={pathname === item.url} // chnage to true and view contnet
                                     onClick={(e) => handleShowPersonalSection(e, item)} // do something on clcik
                                     asChild>
                                         <Link href={item.url} className="flex items-center gap-4">
