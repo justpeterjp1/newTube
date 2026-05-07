@@ -17,7 +17,7 @@ export const videosRouter = createTRPCRouter({
           id: z.string().uuid(),
           updatedAt: z.date(),
         })
-        .nullish(),
+          .nullish(),
         limit: z.number().min(1).max(100),
       }),
     )
@@ -59,12 +59,12 @@ export const videosRouter = createTRPCRouter({
           eq(videos.visibility, "public"),
           cursor
             ? or(
-                lt(videos.updatedAt, cursor.updatedAt),
-                  and(
-                    eq(videos.updatedAt, cursor.updatedAt),
-                    lt(videos.id, cursor.id)
-                  )
-                )
+              lt(videos.updatedAt, cursor.updatedAt),
+              and(
+                eq(videos.updatedAt, cursor.updatedAt),
+                lt(videos.id, cursor.id)
+              )
+            )
             : undefined,
         )).orderBy(desc(videos.updatedAt), desc(videos.id))
         // Add 1 to the limit to check if there is more data
@@ -75,7 +75,7 @@ export const videosRouter = createTRPCRouter({
       const items = hasMore ? data.slice(0, -1) : data;
       // Set the next cursor to the last item if there is more data
       const lastItem = items[items.length - 1];
-      const nextCursor = hasMore 
+      const nextCursor = hasMore
         ? {
           id: lastItem.id,
           updatedAt: lastItem.updatedAt,
@@ -94,7 +94,7 @@ export const videosRouter = createTRPCRouter({
           id: z.string().uuid(),
           viewCount: z.number(),
         })
-        .nullish(),
+          .nullish(),
         limit: z.number().min(1).max(100),
       }),
     )
@@ -126,12 +126,12 @@ export const videosRouter = createTRPCRouter({
           eq(videos.visibility, "public"),
           cursor
             ? or(
-                lt(viewCountSubquery, cursor.viewCount),
-                  and(
-                    eq(viewCountSubquery, cursor.viewCount),
-                    lt(videos.id, cursor.id)
-                  )
-                )
+              lt(viewCountSubquery, cursor.viewCount),
+              and(
+                eq(viewCountSubquery, cursor.viewCount),
+                lt(videos.id, cursor.id)
+              )
+            )
             : undefined,
         )).orderBy(desc(viewCountSubquery), desc(videos.id))
         // Add 1 to the limit to check if there is more data
@@ -142,7 +142,7 @@ export const videosRouter = createTRPCRouter({
       const items = hasMore ? data.slice(0, -1) : data;
       // Set the next cursor to the last item if there is more data
       const lastItem = items[items.length - 1];
-      const nextCursor = hasMore 
+      const nextCursor = hasMore
         ? {
           id: lastItem.id,
           viewCount: lastItem.viewCount,
@@ -163,7 +163,7 @@ export const videosRouter = createTRPCRouter({
           id: z.string().uuid(),
           updatedAt: z.date(),
         })
-        .nullish(),
+          .nullish(),
         limit: z.number().min(1).max(100),
       }),
     )
@@ -192,12 +192,12 @@ export const videosRouter = createTRPCRouter({
           categoryId ? eq(videos.categoryId, categoryId) : undefined,
           cursor
             ? or(
-                lt(videos.updatedAt, cursor.updatedAt),
-                  and(
-                    eq(videos.updatedAt, cursor.updatedAt),
-                    lt(videos.id, cursor.id)
-                  )
-                )
+              lt(videos.updatedAt, cursor.updatedAt),
+              and(
+                eq(videos.updatedAt, cursor.updatedAt),
+                lt(videos.id, cursor.id)
+              )
+            )
             : undefined,
         )).orderBy(desc(videos.updatedAt), desc(videos.id))
         // Add 1 to the limit to check if there is more data
@@ -208,7 +208,7 @@ export const videosRouter = createTRPCRouter({
       const items = hasMore ? data.slice(0, -1) : data;
       // Set the next cursor to the last item if there is more data
       const lastItem = items[items.length - 1];
-      const nextCursor = hasMore 
+      const nextCursor = hasMore
         ? {
           id: lastItem.id,
           updatedAt: lastItem.updatedAt,
@@ -236,7 +236,7 @@ export const videosRouter = createTRPCRouter({
         userId = user.id;
       }
 
-       const viewerReactions = db.$with("viewer_reactions").as(
+      const viewerReactions = db.$with("viewer_reactions").as(
         db
           .select({
             videoId: videoReactions.videoId,
@@ -248,7 +248,7 @@ export const videosRouter = createTRPCRouter({
 
 
 
-    const viewerSubscriptions = db.$with("viewer_subscriptions").as(
+      const viewerSubscriptions = db.$with("viewer_subscriptions").as(
         db
           .select()
           .from(subscriptions)
@@ -257,38 +257,38 @@ export const videosRouter = createTRPCRouter({
 
       const [existingVideo] = await db
         .with(viewerReactions, viewerSubscriptions)
-    .select({
-    ...getTableColumns(videos),
+        .select({
+          ...getTableColumns(videos),
 
-    user: {
-      ...getTableColumns(users),
-      subscriberCount: db.$count(subscriptions, eq(subscriptions.creatorId, users.id)),
+          user: {
+            ...getTableColumns(users),
+            subscriberCount: db.$count(subscriptions, eq(subscriptions.creatorId, users.id)),
             viewerSubscribed: isNotNull(viewerSubscriptions.viewerId).mapWith(Boolean),
-    },
+          },
 
-    viewCount: db.$count(videoViews, eq(videoViews.videoId, videos.id)),
-    likeCount: db.$count(
-      videoReactions,
-      and(
-        eq(videoReactions.videoId, videos.id),
-        eq(videoReactions.type, "like")
-      ),
-    ),
-    dislikeCount: db.$count(
-      videoReactions,
-      and(
-        eq(videoReactions.videoId, videos.id),
-        eq(videoReactions.type, "dislike")
-      ),
-    ),
-    viewerReaction: viewerReactions.type,
-  })
-  .from(videos)
-  .innerJoin(users, eq(videos.userId, users.id))
-  .leftJoin(viewerReactions, eq(videos.id, viewerReactions.videoId))
-  .leftJoin(viewerSubscriptions, eq(viewerSubscriptions.creatorId, users.id))
-  .where(eq(videos.id, input.id))
-  // .groupBy(videos.id, users.id, viewerReactions.type);
+          viewCount: db.$count(videoViews, eq(videoViews.videoId, videos.id)),
+          likeCount: db.$count(
+            videoReactions,
+            and(
+              eq(videoReactions.videoId, videos.id),
+              eq(videoReactions.type, "like")
+            ),
+          ),
+          dislikeCount: db.$count(
+            videoReactions,
+            and(
+              eq(videoReactions.videoId, videos.id),
+              eq(videoReactions.type, "dislike")
+            ),
+          ),
+          viewerReaction: viewerReactions.type,
+        })
+        .from(videos)
+        .innerJoin(users, eq(videos.userId, users.id))
+        .leftJoin(viewerReactions, eq(videos.id, viewerReactions.videoId))
+        .leftJoin(viewerSubscriptions, eq(viewerSubscriptions.creatorId, users.id))
+        .where(eq(videos.id, input.id))
+      // .groupBy(videos.id, users.id, viewerReactions.type);
 
       if (!existingVideo) {
         throw new TRPCError({ code: "NOT_FOUND" });
@@ -391,61 +391,61 @@ export const videosRouter = createTRPCRouter({
       return updatedVideo;
     }),
   restoreThumbnail: protectedProcedure
-  .input(z.object({ id: z.string().uuid() }))
-  .mutation(async ({ ctx, input }) => {
-    const { id: userId } = ctx.user;
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.user;
 
-    const [existingVideo] = await db
-      .select()
-      .from(videos)
-      .where(and(
-        eq(videos.id, input.id),
-        eq(videos.userId, userId),
-      ));
+      const [existingVideo] = await db
+        .select()
+        .from(videos)
+        .where(and(
+          eq(videos.id, input.id),
+          eq(videos.userId, userId),
+        ));
 
-    if (!existingVideo) {
-      throw new TRPCError({ code: "NOT_FOUND" });
-    }
+      if (!existingVideo) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
 
-    if (existingVideo.thumbnailKey) {
+      if (existingVideo.thumbnailKey) {
+        const utapi = new UTApi();
+
+        await utapi.deleteFiles(existingVideo.thumbnailKey);
+        await db.
+          update(videos)
+          .set({ thumbnailKey: null, thumbnailUrl: null })
+          .where(and(
+            eq(videos.id, input.id),
+            eq(videos.userId, userId)
+          ));
+      }
+
+      if (!existingVideo.muxPlaybackId) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
       const utapi = new UTApi();
 
-      await utapi.deleteFiles(existingVideo.thumbnailKey);
-      await db.
-        update(videos)
-        .set({ thumbnailKey: null, thumbnailUrl: null })
+      const tempThumbnailUrl = `https://image.mux.com/${existingVideo.muxPlaybackId}/thumbnail.jpg`;
+      const uploadedThumbnail = await utapi.uploadFilesFromUrl(tempThumbnailUrl);
+
+      if (!uploadedThumbnail.data) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      const { key: thumbnailKey, url: thumbnailUrl } = uploadedThumbnail.data;
+
+      const [updatedVideo] = await db
+        .update(videos)
+        .set({ thumbnailUrl, thumbnailKey })
         .where(and(
           eq(videos.id, input.id),
           eq(videos.userId, userId)
-        ));
-    }
+        ))
+        .returning();
 
-    if (!existingVideo.muxPlaybackId) {
-      throw new TRPCError({ code: "BAD_REQUEST" });
-    }
-
-    const utapi = new UTApi();
-    
-    const tempThumbnailUrl = `https://image.mux.com/${existingVideo.muxPlaybackId}/thumbnail.jpg`;
-    const uploadedThumbnail = await utapi.uploadFilesFromUrl(tempThumbnailUrl);
-
-    if (!uploadedThumbnail.data) {
-      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-    }
-
-    const { key: thumbnailKey, url: thumbnailUrl } = uploadedThumbnail.data;
-
-    const [updatedVideo] = await db
-      .update(videos)
-      .set({ thumbnailUrl, thumbnailKey })
-      .where(and(
-        eq(videos.id, input.id),
-        eq(videos.userId, userId)
-      ))
-      .returning();
-
-    return updatedVideo;
-  }),
+      return updatedVideo;
+    }),
   remove: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
@@ -480,7 +480,7 @@ export const videosRouter = createTRPCRouter({
           title: input.title,
           description: input.description,
           categoryId: input.categoryId,
-          visibility: input.visibility,
+          visibility: input.visibility as "private" | "public" | undefined,
           updatedAt: new Date(),
         })
         .where(and(

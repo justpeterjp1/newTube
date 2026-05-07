@@ -469,7 +469,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value ?? "private"}
+                      defaultValue={(field.value as string) ?? "private"}
                     >
                       <FormControl>
                         <SelectTrigger>
