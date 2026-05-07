@@ -1,5 +1,7 @@
-import { SignIn } from '@clerk/nextjs'
+export const runtime = "nodejs";
+
+import { SignUp } from '@clerk/nextjs'
 
 export default function Page() {
-  return <SignIn />
+  return <SignUp />
 }
