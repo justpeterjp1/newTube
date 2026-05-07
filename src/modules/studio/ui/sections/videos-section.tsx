@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const VideosSection = () => {
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<VideosSectionSkeleton />}>
       <ErrorBoundary fallback="An error occurred">
         <VideosSectionSuspense />
       </ErrorBoundary>

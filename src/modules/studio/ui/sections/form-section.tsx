@@ -40,7 +40,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { APP_URL } from "@/constants";
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { VideoPlayer } from "@/modules/videos/ui/components/video-player";
 

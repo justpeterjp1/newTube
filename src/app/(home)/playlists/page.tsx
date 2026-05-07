@@ -2,7 +2,7 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { HydrateClient, trpc } from "@/trpc/server";
 
 import { VideosView } from "@/modules/playlists/ui/views/videos-view";
-import { PlaylistsView } from "@/modules/playlists/ui/views/playlists-view.tsx"
+
 export const dynamic = "force-dynamic";
 
 interface PageProps {
@@ -17,7 +17,7 @@ const Page = async ({ params }: PageProps) => {
 
   return ( 
     <HydrateClient>
-      <PlaylistsView playlistId={playlistId} />
+      <VideosView playlistId={playlistId} />
     </HydrateClient>
   );
 }
