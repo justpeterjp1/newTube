@@ -24,12 +24,12 @@ const items = [
         icon: ThumbsUpIcon,
         auth: true
     },
-    {
-        title: 'All playlists',
-        url: '/feed/trending',
-        icon: ListVideoIcon,
-        auth: true
-    }
+   {
+    title: "All playlists",
+    url: "/playlists",
+    icon: ListVideoIcon,
+    auth: true,
+  },
 ];
 
 

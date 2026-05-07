@@ -40,6 +40,8 @@ const PlaylistHeaderSectionSuspense = ({
 }: PlaylistHeaderSectionProps) => {
   const [playlist] = trpc.playlists.getOne.useSuspenseQuery({ id: playlistId });
 
+  
+
   const router = useRouter();
   const utils = trpc.useUtils();
   const remove = trpc.playlists.remove.useMutation({
