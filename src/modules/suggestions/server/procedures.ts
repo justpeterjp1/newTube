@@ -63,13 +63,13 @@ export const suggestionsRouter = createTRPCRouter({
               )
           : undefined,
       )).orderBy(desc(videos.updatedAt), desc(videos.id))
-      // Add 1 to the limit to check if there is more data
+      
       .limit(limit + 1)
 
     const hasMore = data.length > limit;
-    // THis removes the last item if there is more data
+    
     const items = hasMore ? data.slice(0, -1) : data;
-    // This will set the next cursor to the last item if there is more data
+    
     const lastItem = items[items.length - 1];
     const nextCursor = hasMore 
       ? {
