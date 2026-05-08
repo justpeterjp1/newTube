@@ -513,7 +513,7 @@ export const videosRouter = createTRPCRouter({
           },
         ],
       },
-      cors_origin: "*", // TODO: In production, set to your url
+      cors_origin: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
     });
 
     const [video] = await db

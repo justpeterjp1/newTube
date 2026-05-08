@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "NewTube",
+  description: "Signin or Signup to continue to NewTube",
+};
 interface LayoutProps {
   children: React.ReactNode;
 }
