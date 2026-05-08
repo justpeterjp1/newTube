@@ -82,20 +82,42 @@ export const POST = async (request: Request) => {
       const duration = data.duration ? Math.round(data.duration * 1000) : 0;
 
       const utapi = new UTApi();
-      const [
-        uploadedThumbnail,
-        uploadedPreview,
-      ] = await utapi.uploadFilesFromUrl([
-        tempThumbnailUrl,
-        tempPreviewUrl,
-      ]);
 
-      if (!uploadedThumbnail.data || !uploadedPreview.data) {
+      let uploadedThumbnail, uploadedPreview;
+      try {
+        const results = await utapi.uploadFilesFromUrl([
+          tempThumbnailUrl,
+          tempPreviewUrl,
+        ]);
+        uploadedThumbnail = results[0];
+        uploadedPreview = results[1];
+
+        console.log("Upload results:", {
+          thumbnail: uploadedThumbnail,
+          preview: uploadedPreview,
+        });
+      } catch (error) {
+        console.error("Error uploading files to UploadThing:", error);
+        return new Response(`Failed to upload files: ${error}`, { status: 500 });
+      }
+
+      if (!uploadedThumbnail?.data || !uploadedPreview?.data) {
+        console.error("Missing data in upload results:", {
+          thumbnailData: uploadedThumbnail?.data,
+          previewData: uploadedPreview?.data,
+        });
         return new Response("Failed to upload thumbnail or preview", { status: 500 });
       }
 
       const { key: thumbnailKey, url: thumbnailUrl } = uploadedThumbnail.data;
       const { key: previewKey, url: previewUrl } = uploadedPreview.data;
+
+      console.log("Extracted URLs:", {
+        thumbnailUrl,
+        previewUrl,
+        thumbnailKey,
+        previewKey,
+      });
 
       await db
         .update(videos)

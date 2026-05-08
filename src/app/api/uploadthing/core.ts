@@ -46,12 +46,12 @@ export const ourFileRouter = {
       await db
         .update(users)
         .set({
-          bannerUrl: file.ufsUrl,
+          bannerUrl: file.url,
           bannerKey: file.key,
         })
         .where(eq(users.id, metadata.userId))
 
-      return { uploadedBy: metadata.userId};
+      return { uploadedBy: metadata.userId };
     }),
   thumbnailUploader: f({
     image: {
@@ -105,7 +105,7 @@ export const ourFileRouter = {
       await db
         .update(videos)
         .set({
-          thumbnailUrl: file.ufsUrl,
+          thumbnailUrl: file.url,
           thumbnailKey: file.key,
         })
         .where(and(

@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/select";
 
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
+import { APP_URL } from "@/constants";
 import { VideoPlayer } from "@/modules/videos/ui/components/video-player";
 
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
@@ -197,7 +198,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     update.mutate(data);
   };
 
-  const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/videos/${videoId}`;
+  const fullUrl = `${APP_URL}/videos/${videoId}`;
   const [isCopied, setIsCopied] = useState(false);
 
   const onCopy = async () => {
